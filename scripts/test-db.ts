@@ -1,4 +1,14 @@
-import { prisma, testPrismaConnection } from '../src/lib/prisma';
+import { prisma } from '../src/lib/prisma';
+
+async function testPrismaConnection() {
+  try {
+    await prisma.$connect();
+    return true;
+  } catch (error) {
+    console.error('فشل في الاتصال بقاعدة البيانات:', error);
+    return false;
+  }
+}
 
 async function testDatabase() {
   console.log('🧪 بدء اختبار قاعدة البيانات...\n');
