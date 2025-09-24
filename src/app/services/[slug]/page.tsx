@@ -69,12 +69,14 @@ export default function ServiceDetailsPage() {
               <span className="text-blue-700 font-extrabold text-xl">{service.price} ريال</span>
             </div>
             <div className="flex justify-start">
-              <button
-                onClick={() => router.push(`/request-form?purpose=${encodeURIComponent(service.purpose)}`)}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold"
+              <a
+                href="https://wa.me/966551117720?text=مرحباً اريد طلب معروض"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold inline-block"
               >
                 اطلب الآن
-              </button>
+              </a>
             </div>
           </div>
         </div>

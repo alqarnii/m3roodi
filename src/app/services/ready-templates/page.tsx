@@ -194,12 +194,14 @@ export default function ReadyTemplates() {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-center">
-                      <Link 
-                        href={`/services/ready-templates/payment?template=${template.id}`}
+                      <a 
+                        href="https://wa.me/966551117720?text=مرحباً اريد طلب معروض"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors"
                       >
                         اطلب الآن
-                      </Link>
+                      </a>
                     </td>
                   </tr>
                 ))}
@@ -243,12 +245,14 @@ export default function ReadyTemplates() {
                   </div>
                 </div>
                 <div className="text-center">
-                  <Link 
-                    href={`/services/ready-templates/payment?template=${template.id}`}
+                  <a 
+                    href="https://wa.me/966551117720?text=مرحباً اريد طلب معروض"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors w-full justify-center"
                   >
                     اطلب الآن
-                  </Link>
+                  </a>
                 </div>
               </div>
             ))}
