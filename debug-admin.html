@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تشخيص لوحة الإدارة</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { color: green; }
+        .error { color: red; }
+        .loading { color: blue; }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #0056b3; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 تشخيص لوحة الإدارة</h1>
+        
+        <div class="test-section">
+            <h3>اختبار API الإحصائيات</h3>
+            <button onclick="testStats()">اختبار الإحصائيات</button>
+            <div id="stats-result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>اختبار API الطلبات</h3>
+            <button onclick="testOrders()">اختبار الطلبات</button>
+            <div id="orders-result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>اختبار API المدفوعات</h3>
+            <button onclick="testPayments()">اختبار المدفوعات</button>
+            <div id="payments-result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>اختبار شامل</h3>
+            <button onclick="runAllTests()">تشغيل جميع الاختبارات</button>
+            <div id="all-tests-result"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3003/api';
+        
+        async function testStats() {
+            const resultDiv = document.getElementById('stats-result');
+            resultDiv.innerHTML = '<div class="loading">جاري الاختبار...</div>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/admin/stats`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success">✅ نجح الاختبار!</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">❌ فشل الاختبار</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">❌ خطأ في الاتصال: ${error.message}</div>
+                `;
+            }
+        }
+        
+        async function testOrders() {
+            const resultDiv = document.getElementById('orders-result');
+            resultDiv.innerHTML = '<div class="loading">جاري الاختبار...</div>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/admin/orders?page=1&limit=5`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success">✅ نجح الاختبار! (${data.data.length} طلب)</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">❌ فشل الاختبار</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">❌ خطأ في الاتصال: ${error.message}</div>
+                `;
+            }
+        }
+        
+        async function testPayments() {
+            const resultDiv = document.getElementById('payments-result');
+            resultDiv.innerHTML = '<div class="loading">جاري الاختبار...</div>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/admin/payments?page=1&limit=5`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success">✅ نجح الاختبار! (${data.data.length} دفعة)</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">❌ فشل الاختبار</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">❌ خطأ في الاتصال: ${error.message}</div>
+                `;
+            }
+        }
+        
+        async function runAllTests() {
+            const resultDiv = document.getElementById('all-tests-result');
+            resultDiv.innerHTML = '<div class="loading">جاري تشغيل جميع الاختبارات...</div>';
+            
+            let results = [];
+            
+            // اختبار الإحصائيات
+            try {
+                const statsResponse = await fetch(`${API_BASE}/admin/stats`);
+                const statsData = await statsResponse.json();
+                results.push({
+                    test: 'الإحصائيات',
+                    success: statsData.success,
+                    data: statsData
+                });
+            } catch (error) {
+                results.push({
+                    test: 'الإحصائيات',
+                    success: false,
+                    error: error.message
+                });
+            }
+            
+            // اختبار الطلبات
+            try {
+                const ordersResponse = await fetch(`${API_BASE}/admin/orders?page=1&limit=5`);
+                const ordersData = await ordersResponse.json();
+                results.push({
+                    test: 'الطلبات',
+                    success: ordersData.success,
+                    count: ordersData.data?.length || 0
+                });
+            } catch (error) {
+                results.push({
+                    test: 'الطلبات',
+                    success: false,
+                    error: error.message
+                });
+            }
+            
+            // اختبار المدفوعات
+            try {
+                const paymentsResponse = await fetch(`${API_BASE}/admin/payments?page=1&limit=5`);
+                const paymentsData = await paymentsResponse.json();
+                results.push({
+                    test: 'المدفوعات',
+                    success: paymentsData.success,
+                    count: paymentsData.data?.length || 0
+                });
+            } catch (error) {
+                results.push({
+                    test: 'المدفوعات',
+                    success: false,
+                    error: error.message
+                });
+            }
+            
+            // عرض النتائج
+            let html = '<h4>نتائج الاختبارات:</h4>';
+            results.forEach(result => {
+                if (result.success) {
+                    html += `<div class="success">✅ ${result.test}: نجح ${result.count ? `(${result.count} عنصر)` : ''}</div>`;
+                } else {
+                    html += `<div class="error">❌ ${result.test}: فشل - ${result.error}</div>`;
+                }
+            });
+            
+            resultDiv.innerHTML = html;
+        }
+    </script>
+</body>
+</html>

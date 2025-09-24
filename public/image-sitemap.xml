@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://m3roodi.com/</loc>
+    <image:image>
+      <image:loc>https://m3roodi.com/m3r.jpeg</image:loc>
+      <image:title>معروضي - خدمات كتابة المعاريض الاحترافية</image:title>
+      <image:caption>معروضي - لكتابة الخطابات القوية والمؤثرة</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m3roodi.com/m3roodic.jpg</image:loc>
+      <image:title>معروضي - خدمات كتابة المعاريض الاحترافية</image:title>
+      <image:caption>معروضي - لكتابة الخطابات القوية والمؤثرة</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://m3roodi.com/loaz.png</image:loc>
+      <image:title>معروضي - خدمات كتابة المعاريض</image:title>
+      <image:caption>معروضي - خدمات كتابة المعاريض والخطابات</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://m3roodi.com/request-form</loc>
+    <image:image>
+      <image:loc>https://m3roodi.com/m3r.jpeg</image:loc>
+      <image:title>كتابة معروض للديوان الملكي</image:title>
+      <image:caption>معروضي - نكتب لك معروض قوي ومؤثر للديوان الملكي</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://m3roodi.com/services/financial-assistance</loc>
+    <image:image>
+      <image:loc>https://m3roodi.com/moneyord.webp</image:loc>
+      <image:title>طلب مساعدة مالية</image:title>
+      <image:caption>معروضي - كتابة معروض طلب مساعدة مالية</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://m3roodi.com/services/naturalization</loc>
+    <image:image>
+      <image:loc>https://m3roodi.com/tjanes.webp</image:loc>
+      <image:title>كتابة طلب تجنيس</image:title>
+      <image:caption>معروضي - كتابة معروض طلب تجنيس احترافي</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://m3roodi.com/services/complaint</loc>
+    <image:image>
+      <image:loc>https://m3roodi.com/shwkot.png</image:loc>
+      <image:title>كتابة خطاب شكوى</image:title>
+      <image:caption>معروضي - كتابة خطاب شكوى احترافي</image:caption>
+    </image:image>
+  </url>
+</urlset>

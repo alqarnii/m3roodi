@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار لوحة الإدارة</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { color: green; }
+        .error { color: red; }
+        .loading { color: blue; }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #0056b3; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 20px 0; }
+        .stat-card { background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center; border: 1px solid #dee2e6; }
+        .stat-value { font-size: 2em; font-weight: bold; color: #007bff; }
+        .stat-label { color: #6c757d; margin-top: 5px; }
+        .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .data-table th, .data-table td { padding: 12px; text-align: right; border: 1px solid #dee2e6; }
+        .data-table th { background: #f8f9fa; font-weight: bold; }
+        .data-table tr:nth-child(even) { background: #f8f9fa; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 اختبار لوحة الإدارة - معروضي</h1>
+        
+        <div class="test-section">
+            <h3>اختبار API الإحصائيات</h3>
+            <button onclick="testStats()">اختبار الإحصائيات</button>
+            <div id="stats-result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>اختبار API الطلبات</h3>
+            <button onclick="testOrders()">اختبار الطلبات</button>
+            <div id="orders-result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>اختبار API المدفوعات</h3>
+            <button onclick="testPayments()">اختبار المدفوعات</button>
+            <div id="payments-result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>اختبار شامل</h3>
+            <button onclick="runAllTests()">تشغيل جميع الاختبارات</button>
+            <div id="all-tests-result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>عرض البيانات</h3>
+            <button onclick="displayData()">عرض البيانات</button>
+            <div id="data-display"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3003/api';
+        let allData = {};
+        
+        async function testStats() {
+            const resultDiv = document.getElementById('stats-result');
+            resultDiv.innerHTML = '<div class="loading">جاري الاختبار...</div>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/admin/stats`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    allData.stats = data;
+                    resultDiv.innerHTML = `
+                        <div class="success">✅ نجح الاختبار!</div>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-value">${data.data.totalRequests || 0}</div>
+                                <div class="stat-label">إجمالي الطلبات</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">${data.data.totalRevenue || 0}</div>
+                                <div class="stat-label">إجمالي الإيرادات (ريال)</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">${data.data.totalEmployees || 0}</div>
+                                <div class="stat-label">الموظفين</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">${data.data.completionRate || 0}%</div>
+                                <div class="stat-label">معدل الإنجاز</div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">❌ فشل الاختبار</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">❌ خطأ في الاتصال: ${error.message}</div>
+                `;
+            }
+        }
+        
+        async function testOrders() {
+            const resultDiv = document.getElementById('orders-result');
+            resultDiv.innerHTML = '<div class="loading">جاري الاختبار...</div>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/admin/orders?page=1&limit=10`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    allData.orders = data;
+                    resultDiv.innerHTML = `
+                        <div class="success">✅ نجح الاختبار! (${data.data.length} طلب)</div>
+                        <p><strong>إجمالي الطلبات:</strong> ${data.pagination.total}</p>
+                        <p><strong>الصفحة الحالية:</strong> ${data.pagination.page} من ${data.pagination.totalPages}</p>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">❌ فشل الاختبار</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">❌ خطأ في الاتصال: ${error.message}</div>
+                `;
+            }
+        }
+        
+        async function testPayments() {
+            const resultDiv = document.getElementById('payments-result');
+            resultDiv.innerHTML = '<div class="loading">جاري الاختبار...</div>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/admin/payments?page=1&limit=10`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    allData.payments = data;
+                    resultDiv.innerHTML = `
+                        <div class="success">✅ نجح الاختبار! (${data.data.length} دفعة)</div>
+                        <p><strong>إجمالي المدفوعات:</strong> ${data.pagination.total}</p>
+                        <p><strong>الصفحة الحالية:</strong> ${data.pagination.page} من ${data.pagination.totalPages}</p>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">❌ فشل الاختبار</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">❌ خطأ في الاتصال: ${error.message}</div>
+                `;
+            }
+        }
+        
+        async function runAllTests() {
+            const resultDiv = document.getElementById('all-tests-result');
+            resultDiv.innerHTML = '<div class="loading">جاري تشغيل جميع الاختبارات...</div>';
+            
+            let results = [];
+            
+            // اختبار الإحصائيات
+            try {
+                const statsResponse = await fetch(`${API_BASE}/admin/stats`);
+                const statsData = await statsResponse.json();
+                results.push({
+                    test: 'الإحصائيات',
+                    success: statsData.success,
+                    data: statsData
+                });
+            } catch (error) {
+                results.push({
+                    test: 'الإحصائيات',
+                    success: false,
+                    error: error.message
+                });
+            }
+            
+            // اختبار الطلبات
+            try {
+                const ordersResponse = await fetch(`${API_BASE}/admin/orders?page=1&limit=5`);
+                const ordersData = await ordersResponse.json();
+                results.push({
+                    test: 'الطلبات',
+                    success: ordersData.success,
+                    count: ordersData.data?.length || 0
+                });
+            } catch (error) {
+                results.push({
+                    test: 'الطلبات',
+                    success: false,
+                    error: error.message
+                });
+            }
+            
+            // اختبار المدفوعات
+            try {
+                const paymentsResponse = await fetch(`${API_BASE}/admin/payments?page=1&limit=5`);
+                const paymentsData = await paymentsResponse.json();
+                results.push({
+                    test: 'المدفوعات',
+                    success: paymentsData.success,
+                    count: paymentsData.data?.length || 0
+                });
+            } catch (error) {
+                results.push({
+                    test: 'المدفوعات',
+                    success: false,
+                    error: error.message
+                });
+            }
+            
+            // عرض النتائج
+            let html = '<h4>نتائج الاختبارات:</h4>';
+            results.forEach(result => {
+                if (result.success) {
+                    html += `<div class="success">✅ ${result.test}: نجح ${result.count ? `(${result.count} عنصر)` : ''}</div>`;
+                } else {
+                    html += `<div class="error">❌ ${result.test}: فشل - ${result.error}</div>`;
+                }
+            });
+            
+            resultDiv.innerHTML = html;
+        }
+        
+        function displayData() {
+            const resultDiv = document.getElementById('data-display');
+            
+            if (!allData.stats || !allData.orders || !allData.payments) {
+                resultDiv.innerHTML = '<div class="error">❌ يرجى تشغيل الاختبارات أولاً</div>';
+                return;
+            }
+            
+            let html = '<h4>عرض البيانات:</h4>';
+            
+            // عرض الطلبات
+            if (allData.orders.data && allData.orders.data.length > 0) {
+                html += '<h5>آخر الطلبات:</h5>';
+                html += '<table class="data-table">';
+                html += '<tr><th>رقم الطلب</th><th>اسم مقدم الطلب</th><th>الغرض</th><th>المبلغ</th><th>الحالة</th><th>التاريخ</th></tr>';
+                allData.orders.data.slice(0, 5).forEach(order => {
+                    html += `<tr>
+                        <td>${order.id}</td>
+                        <td>${order.applicantName}</td>
+                        <td>${order.purpose}</td>
+                        <td>${order.price} ريال</td>
+                        <td>${order.status}</td>
+                        <td>${new Date(order.createdAt).toLocaleDateString('ar-SA')}</td>
+                    </tr>`;
+                });
+                html += '</table>';
+            }
+            
+            // عرض المدفوعات
+            if (allData.payments.data && allData.payments.data.length > 0) {
+                html += '<h5>آخر المدفوعات:</h5>';
+                html += '<table class="data-table">';
+                html += '<tr><th>رقم الدفعة</th><th>اسم العميل</th><th>المبلغ</th><th>طريقة الدفع</th><th>الحالة</th><th>التاريخ</th></tr>';
+                allData.payments.data.slice(0, 5).forEach(payment => {
+                    html += `<tr>
+                        <td>${payment.id}</td>
+                        <td>${payment.applicantName}</td>
+                        <td>${payment.amount} ريال</td>
+                        <td>${payment.paymentMethod}</td>
+                        <td>${payment.paymentStatus}</td>
+                        <td>${new Date(payment.createdAt).toLocaleDateString('ar-SA')}</td>
+                    </tr>`;
+                });
+                html += '</table>';
+            }
+            
+            resultDiv.innerHTML = html;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+# Ignore development files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Keep example env file
+!.env.example
+
+# Ignore test files
+**/*.test.js
+**/*.test.ts
+**/*.spec.js
+**/*.spec.ts
+
+# Ignore documentation
+*.md
+!README.md
+
+# Ignore scripts
+scripts/
+
+# Keep Prisma files
+!prisma/
+!node_modules/.prisma/
