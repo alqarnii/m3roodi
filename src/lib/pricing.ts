@@ -1,8 +1,10 @@
 export interface PricingItem {
   service: string;
-  price: number;  currency: string;
+  price: number;
+  currency: string;
   category: string;
   id: string;
+  orderUrl?: string;
 }
 
 export const pricingData: PricingItem[] = [
@@ -11,84 +13,96 @@ export const pricingData: PricingItem[] = [
     service: 'طلب مساعدة مالية',
     price: 199,
     currency: 'ريال',
-    category: 'معاريض مالية'
+    category: 'معاريض مالية',
+    orderUrl: 'https://new-mall.com/qGqgWKY'
   },
   {
     id: 'debt-payment',
     service: 'طلب سداد دين',
     price: 199,
     currency: 'ريال',
-    category: 'معاريض مالية'
+    category: 'معاريض مالية',
+    orderUrl: 'https://new-mall.com/KRlYydp'
   },
   {
     id: 'transfer-request',
     service: 'طلب نقل',
     price: 199,
     currency: 'ريال',
-    category: 'خدمات النقل'
+    category: 'خدمات النقل',
+    orderUrl: 'https://new-mall.com/YzAPwgj'
   },
   {
     id: 'naturalization',
     service: 'طلب تجنيس',
     price: 350,
     currency: 'ريال',
-    category: 'معاريض الجنسية'
+    category: 'معاريض الجنسية',
+    orderUrl: 'https://new-mall.com/ngPQWDn'
   },
   {
     id: 'treatment-request',
     service: 'طلب علاج',
     price: 150,
     currency: 'ريال',
-    category: 'معاريض العلاج'
+    category: 'معاريض العلاج',
+    orderUrl: 'https://new-mall.com/BpKPAZn'
   },
   {
     id: 'mercy-request',
     service: 'طلب استرحام',
     price: 199,
     currency: 'ريال',
-    category: 'معاريض الاسترحام'
+    category: 'معاريض الاسترحام',
+    orderUrl: 'https://new-mall.com/ngPQWDn'
   },
   {
     id: 'foreign-marriage',
     service: 'طلب زواج من اجنبية',
     price: 300,
     currency: 'ريال',
-    category: 'معاريض الزواج'
+    category: 'معاريض الزواج',
+    orderUrl: 'https://new-mall.com/qGqgWpQ'
   },
   {
     id: 'job-application',
     service: 'طلب وظيفة',
     price: 199,
     currency: 'ريال',
-    category: 'معاريض التوظيف'
+    category: 'معاريض التوظيف',
+    orderUrl: 'https://new-mall.com/ZqGRynP'
   },
   {
     id: 'complaint-letter',
     service: 'شكوى او تظلم',
     price: 250,
     currency: 'ريال',
-    category: 'معاريض الشكاوى'
+    category: 'معاريض الشكاوى',
+    orderUrl: 'https://new-mall.com/DpXNPmW'
   },
   {
     id: 'special-request',
     service: 'معروض خاص',
     price: 350,
     currency: 'ريال',
-    category: 'معاريض خاصة'
+    category: 'معاريض خاصة',
+    orderUrl: 'https://new-mall.com/oZEQPDR'
   },
   {
     id: 'certificate-letter',
     service: 'كتابة مشهد',
     price: 199,
     currency: 'ريال',
-    category: 'خطابات المشاهد'
+    category: 'خطابات المشاهد',
+    orderUrl: 'https://new-mall.com/eQgrKnX'
   },
   {
     id: 'royal-court',
     service: 'كتابة معروض للديوان الملكي',
     price: 199,
     currency: 'ريال',
-    category: 'معاريض الديوان الملكي'
+    category: 'معاريض الديوان الملكي',
+    orderUrl: 'https://new-mall.com/vAynrQB'
   },
   {
     id: 'send-proposal',
@@ -109,7 +123,8 @@ export const pricingData: PricingItem[] = [
     service: 'طلب منحة أرض',
     price: 199,
     currency: 'ريال',
-    category: 'معاريض الأراضي'
+    category: 'معاريض الأراضي',
+    orderUrl: 'https://new-mall.com/XzAbroO'
   }
 ];
 

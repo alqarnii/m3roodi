@@ -69,7 +69,7 @@ export default function Pricing() {
                         </span>
                       ) : (
                         <a 
-                          href="https://wa.me/966551117720?text=مرحباً اريد طلب معروض"
+                          href={item.orderUrl || "https://wa.me/966551117720?text=مرحباً اريد طلب معروض"}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="group relative inline-flex items-center justify-center px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg overflow-hidden transition-all duration-300 ease-out hover:scale-105 hover:shadow-lg transform-gpu"
@@ -129,7 +129,7 @@ export default function Pricing() {
                     </span>
                   ) : (
                     <a 
-                      href="https://wa.me/966551117720?text=مرحباً اريد طلب معروض"
+                      href={item.orderUrl || "https://wa.me/966551117720?text=مرحباً اريد طلب معروض"}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors w-full justify-center"
